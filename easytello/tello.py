@@ -63,7 +63,7 @@ class Tello:
     def wait(self, delay: float):
         if self.debug is True:
             print('Waiting {} seconds...'.format(delay))
-        self.log.append(Stats(wait, len(self.log)))
+        self.log.append(Stats('wait', len(self.log)))
         time.sleep(delay)
     
     def up(self, dist: int):
