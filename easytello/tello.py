@@ -23,7 +23,7 @@ class Tello:
         self.debug = debug
         self.command()
 
-    def send_command(self, command, query=False):
+    def send_command(self, command: str, query: bool =False):
         self.log.append(Stats(command, len(self.log)))
 
         self.socket.sendto(command.encode('utf-8'), self.tello_address)
