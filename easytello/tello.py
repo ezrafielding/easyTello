@@ -59,6 +59,11 @@ class Tello:
 
     def land(self):
         self.send_command('land')
+
+    def wait(self, delay: float):
+        if self.debug is True:
+            print('Waiting {} seconds...'.format(delay))
+        time.sleep(delay)
     
     def up(self, dist: int):
         self.send_command('up {}'.format(dist))
