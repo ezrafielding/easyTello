@@ -21,8 +21,9 @@ class Tello:
 
         self.MAX_TIME_OUT = 15.0
         self.debug = debug
+        self.command()
 
-    def send_command(self, command):
+    def send_command(self, command, query=False):
         self.log.append(Stats(command, len(self.log)))
 
         self.socket.sendto(command.encode('utf-8'), self.tello_address)
@@ -30,13 +31,13 @@ class Tello:
             print('Sending command: {}'.format(command))
 
         start = time.time()
-        while not self.log.got_response():
+        while not self.log[-1].got_response():
             now = time.time()
             difference = now - start
             if difference > self.MAX_TIME_OUT:
                 print('Connection timed out!')
                 break
-        if self.debug is True:
+        if self.debug is True and query is False:
             print('Response: {}'.format(self.log[-1].get_response()))
 
     def _recieve_thread(self):
@@ -91,15 +92,14 @@ class Tello:
         self.send_command('speed {}'.format(speed))
 
     def get_speed(self):
-        self.send_command('Speed?')
+        self.send_command('Speed?', True)
         return self.log[-1].get_response()
 
     def get_battery(self):
-        self.send_command('Battery?')
+        self.send_command('Battery?', True)
         return self.log[-1].get_response()
 
     def get_time(self):
-        self.send_command('Time')
+        self.send_command('Time', True)
         return self.log[-1].get_response()
-
     
