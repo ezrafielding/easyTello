@@ -40,7 +40,7 @@ class Tello:
         if self.debug is True and query is False:
             print('Response: {}'.format(self.log[-1].get_response()))
 
-    def _recieve_thread(self):
+    def _receive_thread(self):
         while True:
             try:
                 self.response, ip = self.socket.recvfrom(1024)
