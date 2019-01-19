@@ -12,7 +12,7 @@ class Stats:
 
     def add_response(self, response: str):
         self.response = response
-        self.end_time = datetime
+        self.end_time = datetime.now()
         self.duration = (self.end_time-self.start_time).total_seconds()
 
     def got_response(self):
