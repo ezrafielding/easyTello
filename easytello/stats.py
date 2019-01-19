@@ -1,7 +1,7 @@
 from datetime import datetime
 
 class Stats:
-    def __init_(self, command, id):
+    def __init_(self, command: str, id: int):
         self.command = command
         self.response = None
         self.id = id
@@ -10,7 +10,7 @@ class Stats:
         self.end_time = None
         self.duration = None
 
-    def add_response(self, response):
+    def add_response(self, response: str):
         self.response = response
         self.end_time = datetime
         self.duration = (self.end_time-self.start_time).total_seconds()
