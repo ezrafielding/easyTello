@@ -148,15 +148,15 @@ class Tello:
         self.send_command('baro?', True)
         return self.log[-1].get_response()
 
-    def get_acceleration():
+    def get_acceleration(self):
         self.send_command('acceleration?', True)
         return self.log[-1].get_response()
     
-    def get_tof():
+    def get_tof(self):
         self.send_command('tof?', True)
         return self.log[-1].get_response()
 
-    def get_wifi():
+    def get_wifi(self):
         self.send_command('wifi?', True)
         return self.log[-1].get_response()
     
