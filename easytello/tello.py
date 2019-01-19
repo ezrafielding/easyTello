@@ -1,7 +1,7 @@
 import socket
 import threading
 import time
-from stats import Stats
+from easytello.stats import Stats
 
 class Tello:
     def __init__(self, tello_ip: str='192.168.10.1', debug: bool=True):

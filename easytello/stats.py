@@ -1,7 +1,7 @@
 from datetime import datetime
 
 class Stats:
-    def __init_(self, command: str, id: int):
+    def __init__(self, command: str, id: int):
         self.command = command
         self.response = None
         self.id = id
