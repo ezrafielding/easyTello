@@ -12,6 +12,7 @@ class Stats:
 
     def add_response(self, response: str):
         self.response = response
+        # Calculating total time taken to execute command
         self.end_time = datetime.now()
         self.duration = (self.end_time-self.start_time).total_seconds()
 
