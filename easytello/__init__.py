@@ -2,7 +2,7 @@ __title__ = 'easytello'
 __author__ = 'Ezra Fielding'
 __liscence__ = 'MIT'
 __copyright__ = 'Copyright 2019 Ezra Fielding'
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 __all__ = ['tello', 'stats']
 
 from .tello import Tello

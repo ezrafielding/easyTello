@@ -1,6 +1,7 @@
 import socket
 import threading
 import time
+import cv2
 from easytello.stats import Stats
 
 class Tello:
@@ -23,6 +24,7 @@ class Tello:
         self.receive_thread.start()
 
         # easyTello runtime options
+        self.stream_state = False
         self.MAX_TIME_OUT = 15.0
         self.debug = debug
         # Setting Tello to command mode
@@ -58,6 +60,18 @@ class Tello:
                 self.log[-1].add_response(self.response)
             except socket.error as exc:
                 print('Socket error: {}'.format(exc))
+
+    def _video_thread(self):
+        cap = cv2.VideoCapture('udp://'+self.tello_ip+':11111')
+        while self.stream_state:
+            ret, frame = cap.read()
+            cv2.imshow('DJI Tello', frame)
+
+            k = cv2.waitKey(1) & 0xFF
+            if k == 27:
+                break
+        cap.release()
+        cv2.destroyAllWindows()
     
     def wait(self, delay: float):
         # Displaying wait message (if 'debug' is True)
@@ -83,8 +97,13 @@ class Tello:
 
     def streamon(self):
         self.send_command('streamon')
+        self.stream_state = True
+        self.video_stream = threading.Thread(target=self._video_thread)
+        self.video_stream.daemon = True
+        self.video_stream.start()
 
     def streamoff(self):
+        self.stream_state = False
         self.send_command('streamoff')
 
     def emergency(self):
