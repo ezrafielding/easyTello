@@ -166,7 +166,7 @@ class Tello:
         return self.log[-1].get_response()
 
     def get_time(self):
-        self.send_command('time', True)
+        self.send_command('time?', True)
         return self.log[-1].get_response()
 
     def get_height(self):
