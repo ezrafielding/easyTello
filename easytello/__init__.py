@@ -2,11 +2,7 @@ __title__ = 'easytello'
 __author__ = 'Ezra Fielding'
 __liscence__ = 'MIT'
 __copyright__ = 'Copyright 2019 Ezra Fielding'
-<<<<<<< HEAD
-__version__ = '0.0.6'
-=======
 __version__ = '0.0.7'
->>>>>>> develop
 __all__ = ['tello', 'stats']
 
 from .tello import Tello
