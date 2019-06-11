@@ -37,7 +37,7 @@ class Stats:
     
     def attitude_response(self):
         raw_att = self.response.split(';')
-        att_data = (self.fint_response(raw_att[0]), self.int_response(raw_att[1]), self.int_response(raw_att[2]))
+        att_data = (self.int_response(raw_att[0]), self.int_response(raw_att[1]), self.int_response(raw_att[2]))
         return att_data
     
     def acceleration_response(self):
