@@ -7,3 +7,4 @@ __all__ = ['tello', 'stats']
 
 from .tello import Tello
 from .stats import Stats
+import easytello.tello_video

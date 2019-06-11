@@ -1,8 +1,10 @@
 import socket
 import threading
+import multiprocessing as mp
 import time
 import cv2
 from easytello.stats import Stats
+from easytello import tello_video
 
 class Tello:
     def __init__(self, tello_ip: str='192.168.10.1', debug: bool=True):
@@ -60,21 +62,6 @@ class Tello:
                 self.log[-1].add_response(self.response)
             except socket.error as exc:
                 print('Socket error: {}'.format(exc))
-
-    def _video_thread(self):
-        # Creating stream capture object
-        cap = cv2.VideoCapture('udp://'+self.tello_ip+':11111')
-        # Runs while 'stream_state' is True
-        while self.stream_state:
-            ret, frame = cap.read()
-            cv2.imshow('DJI Tello', frame)
-
-            # Video Stream is closed if escape key is pressed
-            k = cv2.waitKey(1) & 0xFF
-            if k == 27:
-                break
-        cap.release()
-        cv2.destroyAllWindows()
     
     def wait(self, delay: float):
         # Displaying wait message (if 'debug' is True)
@@ -101,12 +88,17 @@ class Tello:
     def streamon(self):
         self.send_command('streamon')
         self.stream_state = True
-        self.video_stream = threading.Thread(target=self._video_thread)
-        self.video_stream.daemon = True
+        mp.set_start_method('fork')
+        self.stream_state_send, stream_state_receive = mp.Pipe()
+        self.stream_state_condition = mp.Value('i', 1)
+        self.video_stream = mp.Process(target=tello_video.video_process, args=(self.stream_state_condition, self.tello_ip,))
         self.video_stream.start()
+        print('ping')
 
     def streamoff(self):
         self.stream_state = False
+        self.stream_state_condition.value = 0
+        time.sleep(0.5)
         self.send_command('streamoff')
 
     def emergency(self):
