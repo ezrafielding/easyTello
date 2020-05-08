@@ -10,6 +10,7 @@ class Tello:
         self.local_ip = ''
         self.local_port = 8889
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.socket.bind((self.local_ip, self.local_port))
         
         # Setting Tello ip and port info
@@ -87,6 +88,9 @@ class Tello:
     
     def get_log(self):
         return self.log
+    
+    def close(self):
+        self.socket.close()
 
     # Controll Commands
     def command(self):
@@ -196,4 +200,3 @@ class Tello:
     def get_wifi(self):
         self.send_command('wifi?', True)
         return self.log[-1].get_response()
-    
