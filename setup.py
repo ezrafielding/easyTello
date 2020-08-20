@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name='easytello',
-    version='0.0.7',
+    version='0.0.8',
     author='Ezra Fielding',
     author_email='ezra.fielding@gmail.com',
     description='An easy framework to support DJI Tello scripting in Python 3',
