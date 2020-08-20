@@ -10,6 +10,7 @@ class Tello:
         self.local_ip = ''
         self.local_port = 8889
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.socket.bind((self.local_ip, self.local_port))
         
         # Setting Tello ip and port info
@@ -25,6 +26,7 @@ class Tello:
 
         # easyTello runtime options
         self.stream_state = False
+        self.last_frame = None
         self.MAX_TIME_OUT = 15.0
         self.debug = debug
         # Setting Tello to command mode
@@ -66,8 +68,8 @@ class Tello:
         cap = cv2.VideoCapture('udp://'+self.tello_ip+':11111')
         # Runs while 'stream_state' is True
         while self.stream_state:
-            ret, frame = cap.read()
-            cv2.imshow('DJI Tello', frame)
+            ret, self.last_frame = cap.read()
+            cv2.imshow('DJI Tello', self.last_frame)
 
             # Video Stream is closed if escape key is pressed
             k = cv2.waitKey(1) & 0xFF
@@ -87,6 +89,9 @@ class Tello:
     
     def get_log(self):
         return self.log
+    
+    def close(self):
+        self.socket.close()
 
     # Controll Commands
     def command(self):
@@ -196,4 +201,3 @@ class Tello:
     def get_wifi(self):
         self.send_command('wifi?', True)
         return self.log[-1].get_response()
-    
