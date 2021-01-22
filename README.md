@@ -3,6 +3,8 @@
 [![liscence](https://img.shields.io/pypi/l/easytello.svg)](https://pypi.org/project/easytello/)
 [![PyPI](https://img.shields.io/pypi/v/easytello.svg)](https://pypi.org/project/easytello/)
 
+**Note: Not under active development**
+
 **easyTello** is a Python library created to provide users with a simple way to interface and send commands to the DJI Tello drone, as well as to simply and easily teach students how to control the drone using Python 3. All the commands outlined in the DJI Tello SDK 1.3.0.0 are present in this library.
 
 ## Installation
